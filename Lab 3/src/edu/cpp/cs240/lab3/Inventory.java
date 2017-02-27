@@ -135,19 +135,128 @@ public class Inventory{
 		}
 	}
 	
-	public void sortInventory( int currentDate){
-		FoodItem[] bunArray = new Bun[buns.size()];
-		for ( int i = 0; i < bunArray.length; i++){
-			bunArray[i] = buns.pop();
+	public int[] sortInventory( int currentDate){
+		int wasteCheese = sortCheese(currentDate);
+		int wasteBun = sortBuns(currentDate);
+		int wastePatty = sortPatties(currentDate);
+		int wasteLettuce = sortLettuce(currentDate);
+		int wasteTomato = sortTomato(currentDate);
+		int wasteOnion = sortOnion(currentDate);
+		int[] waste = {wasteCheese, wasteBun, wastePatty,
+						wasteLettuce, wasteTomato, wasteOnion};
+		return waste;
+	}
+	
+	private int sortOnion(int currentDate) {
+		int wasteOnion = 0;
+		FoodItem[] tempArray = new Onion[onions.size()];
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = onions.pop();
 		}
-		selectionFoodSort( bunArray );
-		for ( int i = 0; i < bunArray.length; i++){
-			Bun b = (Bun)bunArray[i];
-			if( currentDate < b.getExpirationDate() ){
-				buns.push(b);
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Onion o = (Onion)tempArray[i];
+			if( currentDate < o.getExpirationDate() ){
+				onions.push(o);
+			} else {
+				wasteOnion++;
 			}
 		}
-		
+		return wasteOnion;
+	}
+	private int sortTomato(int currentDate) {
+		int wasteTomato = 0;
+		FoodItem[] tempArray = new Tomato[tomatoes.size()];
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = tomatoes.pop();
+		}
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Tomato l = (Tomato)tempArray[i];
+			if( currentDate < l.getExpirationDate() ){
+				tomatoes.push(l);
+			} else {
+				wasteTomato++;
+			}
+		}
+		return wasteTomato;
+	}
+	private int sortLettuce(int currentDate) {
+		int wasteLettuce = 0;
+		FoodItem[] tempArray = new Lettuce[lettuce.size()];
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = lettuce.pop();
+		}
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Lettuce l = (Lettuce)tempArray[i];
+			if( currentDate < l.getExpirationDate() ){
+				lettuce.push(l);
+			} else {
+				wasteLettuce++;
+			}
+		}
+		return wasteLettuce;
+	}
+	private int sortPatties(int currentDate) {
+		int wastePatty = 0;
+		FoodItem[] tempArray = new Patty[patties.size()];
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = patties.pop();
+		}
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Patty p = (Patty)tempArray[i];
+			if( currentDate < p.getExpirationDate() ){
+				patties.push(p);
+			} else {
+				wastePatty++;
+			}
+		}
+		return wastePatty;
+	}
+	private int sortCheese(int currentDate) {
+		FoodItem[] tempArray = new Cheese[cheese.size()];
+		int wasteCheese = 0;
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = cheese.pop();
+		}
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Cheese c = (Cheese)tempArray[i];
+			if( currentDate < c.getExpirationDate() ){
+				cheese.push(c);
+			} else {
+				wasteCheese++;
+			}
+		}
+		return wasteCheese;
+	}
+	private int sortBuns( int currentDate) {
+		int wasteBun = 0;
+		FoodItem[] tempArray = new Bun[buns.size()];
+		for ( int i = 0; i < tempArray.length; i++){
+			tempArray[i] = buns.pop();
+		}
+		selectionFoodSort( tempArray );
+		for ( int i = 0; i < tempArray.length; i++){
+			Bun b = (Bun)tempArray[i];
+			if( currentDate < b.getExpirationDate() ){
+				buns.push(b);
+			} else {
+				wasteBun++;
+			}
+		}
+		return wasteBun;
+	}
+	
+	public void printInventory(){
+		System.out.println("Buns: " + buns.size());
+		System.out.println("Patties: " + patties.size());
+		System.out.println("Cheese: " + cheese.size());
+		System.out.println("Onions: " + onions.size());
+		System.out.println("Lettuce: " + lettuce.size());
+		System.out.println("Tomatoes: " + tomatoes.size());
 	}
 	
 	public void selectionFoodSort( FoodItem[] items) {
